@@ -1,0 +1,134 @@
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+
+.profile-header a {
+  padding: 0 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.profile-header a:hover,
+.profile-header a:hover i {
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.edit button {
+  padding: 10px;
+  background-color: #407ae6;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+.edit i {
+  font-weight: 300;
+  color: #fff;
+}
+
+.edit button:hover {
+  background-color: #405ee6;
+}
+
+.card-data {
+  margin: 20px;
+  border-radius: 8px;
+  background-color: #1f1f1f;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+}
+
+.data-image {
+  min-width: 250px;
+  height: 250px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #1f1f1f;
+}
+
+.data-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  aspect-ratio: 3 / 4;
+}
+/* ************************* */
+.data-info {
+  width: 100%;
+}
+.data-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.datos-personales ul {
+  list-style: none;
+}
+
+.data-info .datos-personales {
+  display: flex;
+  gap: 100px;
+}
+
+.data-info .datos-personales li {
+  margin: 10px 0;
+  font-size: 1.3rem;
+}
+.data-info .datos-personales li span i {
+  margin: 0 5px;
+}
+
+datos-personales li a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.datos-personales li a:hover {
+  transform: scale(1.2);
+}
+
+/* Color por red social */
+.fa-instagram {
+  background: linear-gradient(
+    45deg,
+    #f09433,
+    #e6683c,
+    #dc2743,
+    #cc2366,
+    #bc1888
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.fa-facebook {
+  color: #1877f2;
+}
+.fa-telegram {
+  color: #229ed9;
+}
+.fa-whatsapp {
+  color: #25d366;
+}

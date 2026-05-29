@@ -2,6 +2,8 @@ import express from 'express';
 import homeRoutes from './routes/home.js';
 import panelroutes from './routes/panel.js';
 import dashboardroutes from './routes/dashboard.js';
+import profileRoutes from './routes/profile.js';
+
 
 const app = express();
 
@@ -14,6 +16,7 @@ app.set('view engine', 'ejs');
 app.use('/', homeRoutes);
 app.use('/panel', panelroutes);
 app.use('/dashboard', dashboardroutes)
+app.use('/profile', profileRoutes);
 
 
 app.listen(PORT, ()=> {
