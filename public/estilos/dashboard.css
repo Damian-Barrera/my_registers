@@ -14,6 +14,7 @@ nav {
   border-right: 1px solid #444;
   display: flex;
   flex-direction: column;
+  flex-shrink: 1;
 }
 
 .header {
@@ -80,12 +81,30 @@ nav footer .fa-user {
 nav footer .logout {
   display: flex;
   flex-direction: column;
+  min-width: 0; /* permite que flex shrink funcione */
+  flex: 1; /* ocupa el espacio disponible sin empujar al ícono */
+  overflow: hidden;
 }
+
+nav footer .logout p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 nav footer .logout span {
   color: var(--color-texto);
   text-shadow: 0px 0px 0 #fff;
   font-size: 0.8rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
+
+nav footer .logout span:active{
+  white-space: normal;
+}
+
 nav footer .fa-arrow-right-from-bracket {
   margin-left: 1.5rem;
   font-size: 1.2rem;
@@ -166,13 +185,13 @@ nav footer .fa-arrow-right-from-bracket:hover {
   font-size: 2rem;
   font-weight: 600;
   text-shadow: 0 1px 4px #000000cc;
-  background: linear-gradient( #42424299,#00000099);
+  background: linear-gradient(#42424299, #00000099);
   padding: 0 10px;
   width: 90%;
   display: flex;
   justify-content: center;
   border-radius: 8px;
- }
+}
 
 .cards-images .img img {
   width: 100%;

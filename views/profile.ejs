@@ -39,7 +39,7 @@
           <i class="fa-regular fa-user"></i>
           <div class="logout">
             <p>Cerrar Sesión</p>
-            <span>@correoelectronico</span>
+            <span>usuarioexistente@hotmail.com</span>
           </div>
           <a href="/">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
@@ -55,14 +55,12 @@
             </a>
             <h2>Renata</h2>
           </section>
-          <form class="edit">
-            <button type="submit">
-              <a href="/edit-profile">
-                <i class="fa-solid fa-pen-to-square"></i>
-                Editar
-              </a>
-            </button>
-          </form>
+          <div class="edit">
+            <a href="/edit-profile">
+              <i class="fa-solid fa-pen-to-square"></i>
+              Editar
+            </a>
+          </div>
         </header>
         <div class="card-data">
           <section class="data-image">
@@ -130,13 +128,19 @@
                     </span>
 
                     <span>
-                      <a href="https://www.tiktok.com/@renata" target="_blank">
+                      <a
+                        href="https://www.telegram.com/@renata"
+                        target="_blank"
+                      >
                         <i class="fa-brands fa-telegram"></i>
                       </a>
                     </span>
 
                     <span>
-                      <a href="https://www.tiktok.com/@renata" target="_blank">
+                      <a
+                        href="https://www.whatsapp.com/@renata"
+                        target="_blank"
+                      >
                         <i class="fa-brands fa-whatsapp"></i>
                       </a>
                     </span>
@@ -145,19 +149,104 @@
               </div>
             </div>
             <div class="description">
-              <h4>Acerca de mi:</h4>
+              <h3>Acerca de mi:</h3>
               <p>
                 Soy una persona apasionada por la moda y el estilo, siempre
-                buscando nuevas tendencias y formas de expresarme a través de
-                mi apariencia. Me encanta experimentar con diferentes looks y
-                estilos, y me siento cómoda tanto en ropa casual como en atuendos
-                más elegantes. Mi estilo personal es una mezcla de lo clásico y lo
-                moderno, con un toque de originalidad que me permite destacar en
-                cualquier ocasión.
+                buscando nuevas tendencias y formas de expresarme a través de mi
+                apariencia. Me encanta experimentar con diferentes looks y
+                estilos, y me siento cómoda tanto en ropa casual como en
+                atuendos más elegantes. Mi estilo personal es una mezcla de lo
+                clásico y lo moderno, con un toque de originalidad que me
+                permite destacar en cualquier ocasión.
+              </p>
             </div>
           </section>
         </div>
+        <div class="gallery">
+          <div class="card">
+            <img src="/images/renata.webp" alt="Foto de perfil" />
+          </div>
+          <div class="card">
+            <img src="/images/1080w.webp" alt="Foto de perfil" />
+          </div>
+          <div class="card">
+            <img src="/images/renata.webp" alt="Foto de perfil" />
+          </div>
+          <div class="card">
+            <img src="/images/1080w.webp" alt="Foto de perfil" />
+          </div>
+          <div class="card">
+            <img src="/images/renata.webp" alt="Foto de perfil" />
+          </div>
+        </div>
       </section>
     </div>
+    <div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+  <button class="lightbox-arrow left" id="lightbox-prev">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <div class="lightbox-img-wrapper">
+    <img src="" alt="Imagen ampliada" id="lightbox-img" />
+  </div>
+  <button class="lightbox-arrow right" id="lightbox-next">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+  <div class="lightbox-counter" id="lightbox-counter">1 / 5</div>
+</div>
+
+<script>
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const counter = document.getElementById("lightbox-counter");
+  const cards = document.querySelectorAll(".gallery .card img");
+  let current = 0;
+
+  function openLightbox(index) {
+    current = index;
+    lightboxImg.src = cards[current].src;
+    counter.textContent = `${current + 1} / ${cards.length}`;
+    lightbox.classList.add("active");
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove("active");
+    document.body.style.overflow = "";
+  }
+
+  function showNext() {
+    current = (current + 1) % cards.length;
+    lightboxImg.src = cards[current].src;
+    counter.textContent = `${current + 1} / ${cards.length}`;
+  }
+
+  function showPrev() {
+    current = (current - 1 + cards.length) % cards.length;
+    lightboxImg.src = cards[current].src;
+    counter.textContent = `${current + 1} / ${cards.length}`;
+  }
+
+  cards.forEach((img, index) => {
+    img.parentElement.addEventListener("click", () => openLightbox(index));
+  });
+
+  document.getElementById("lightbox-close").addEventListener("click", closeLightbox);
+  document.getElementById("lightbox-next").addEventListener("click", showNext);
+  document.getElementById("lightbox-prev").addEventListener("click", showPrev);
+
+  lightbox.addEventListener("click", (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (!lightbox.classList.contains("active")) return;
+    if (e.key === "ArrowRight") showNext();
+    if (e.key === "ArrowLeft") showPrev();
+    if (e.key === "Escape") closeLightbox();
+  });
+</script>
   </body>
 </html>
