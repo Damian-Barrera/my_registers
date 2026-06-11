@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/estilos/main.css" />
+    <link rel="stylesheet" href="/estilos/dashboard.css" />
+    <link rel="stylesheet" href="/estilos/edit.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+    />
+    <title>Edit profile</title>
+  </head>
+  <body>
+    <div class="main">
+      <nav>
+        <header class="header">
+          <i class="fa-solid fa-users"></i>
+          <h3>Panel de Control</h3>
+        </header>
+        <hr />
+        <ul>
+          <li>
+            <a href="">
+              <i class="fa-solid fa-users"></i>
+              <span>Ver Contactos</span>
+            </a>
+          </li>
+          <li>
+            <a href="">
+              <i class="fa-solid fa-user-plus"></i>
+              <span>Agregar Contacto</span>
+            </a>
+          </li>
+        </ul>
+
+        <footer>
+          <i class="fa-regular fa-user"></i>
+          <div class="logout">
+            <p>Cerrar Sesión</p>
+            <span>usuarioexistente@hotmail.com</span>
+          </div>
+          <a href="/">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </a>
+        </footer>
+      </nav>
+      <section class="main-content">
+        <header>
+          <section class="profile-header">
+            <a href="/profile">
+              <i class="fa-solid fa-arrow-left"></i>
+              Atras
+            </a>
+            <h2>Editar</h2>
+          </section>
+        </header>
+        <form class="form-edit" action="">
+          <label for="">Nombre:</label>
+          <input type="text" name="nombre" id="" />
+
+          <label for="">Direccion:</label>
+          <input type="text" name="direccion" id="" />
+
+          <label for="">Telefono:</label>
+          <input type="tel" name="telefono" id="" />
+
+          <label for="">Zona:</label>
+          <input type="text" name="zona" id="" />
+
+          <label for="">Edad:</label>
+          <input type="text" name="edad" id="" />
+
+          <label for="">Medidas:</label>
+          <input type="text" name="medidas" id="" />
+
+          <label for="">Altura:</label>
+          <input type="text" name="altura" id="" />
+
+          <label for="">Horarios:</label>
+          <input type="text" name="horarios" id="" />
+
+          <label for="">Tarifa:</label>
+          <input type="text" name="tarifa" id="" />
+
+          <label for="">Descripción:</label>
+          <textarea name="descripcion" id=""></textarea>
+
+          <div class="imagenes-actuales">
+            <h3>Imagenes acutales</h3>
+            <div class="imgs">
+              <div class="card">
+                <img src="/images/anto.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/flor.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/brizaa.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/flor.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/anto.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/brizaa.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/anto.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/flor.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/brizaa.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/anto.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/brizaa.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/flor.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/anto.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+              <div class="card">
+                <img src="/images/flor.jpg" alt="" />
+                <button type="button">Eliminar</button>
+              </div>
+            </div>
+          </div>
+          <section class="add-images">
+            <h3 for="">Agregar Imagenes</h3>
+            <div class="cargar-archivo">
+              <input type="file" name="" id="" />
+              <p>+</p>
+              <p>Click para agreagar mas imagenes</p>
+            </div>
+            <div class="nuevas-imgs" id="nuevas-imgs"></div>
+          </section>
+          <section class="btns">
+            <button type="button" class="cancel">
+              <a href="/profile">Cancelar</a>
+            </button>
+            <button type="submit" class="guardar">Guardar Cambios</button>
+          </section>
+        </form>
+      </section>
+    </div>
+    <script>
+      const input = document.querySelector('.add-images input[type="file"]');
+      const nuevasImgs = document.getElementById("nuevas-imgs");
+
+      let archivos = [];
+
+      input.addEventListener("change", () => {
+        const files = Array.from(input.files);
+
+        files.forEach((file) => {
+          const reader = new FileReader();
+
+          reader.onload = (e) => {
+            const index = archivos.length;
+            archivos.push(file);
+
+            const card = document.createElement("div");
+            card.classList.add("card-nueva");
+            card.dataset.index = index;
+
+            card.innerHTML = `
+          <img src="${e.target.result}" alt="${file.name}" />
+          <button type="button" class="delete-nueva">✕</button>
+        `;
+
+            card
+              .querySelector(".delete-nueva")
+              .addEventListener("click", () => {
+                archivos[card.dataset.index] = null;
+                card.remove();
+              });
+
+            nuevasImgs.appendChild(card);
+          };
+
+          reader.readAsDataURL(file);
+        });
+
+        input.value = "";
+      });
+    </script>
+  </body>
+</html>

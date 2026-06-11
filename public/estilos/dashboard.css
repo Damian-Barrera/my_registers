@@ -9,12 +9,15 @@
 /* ******* NAV ******* */
 nav {
   width: 300px;
-  min-height: 100vh;
+  height: 100vh; /* cambiás min-height por height */
+  position: sticky; /* se queda fijo al hacer scroll */
+  top: 0;
+  overflow-y: auto;
   background-color: var(--background-color);
   border-right: 1px solid #444;
   display: flex;
   flex-direction: column;
-  flex-shrink: 1;
+  flex-shrink: 0;
 }
 
 .header {
@@ -101,7 +104,7 @@ nav footer .logout span {
   text-overflow: ellipsis;
 }
 
-nav footer .logout span:active{
+nav footer .logout span:active {
   white-space: normal;
 }
 
@@ -117,6 +120,8 @@ nav footer .fa-arrow-right-from-bracket:hover {
 
 .main-content {
   flex: 1;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .main-content header {

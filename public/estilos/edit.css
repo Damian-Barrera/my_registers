@@ -1,0 +1,218 @@
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  align-items: center;
+}
+
+.profile-header a {
+  display: flex;
+  padding: 8px 12px;
+  flex-direction: row;
+  gap: 8px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  transition: all 0.3s ease;
+}
+.profile-header a:hover,
+.profile-header a:hover i {
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.form-edit {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.form-edit label {
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+}
+
+.form-edit input,
+.form-edit textarea {
+  margin-bottom: 10px;
+  width: 100%;
+  height: 42px;
+  padding: 12px;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  border: 1px solid #3a3a3a;
+  outline: none;
+  color: #f0f8ff;
+  font-size: 1rem;
+}
+
+.form-edit input:focus {
+  border: 2px solid #0078d4;
+}
+
+.form-edit textarea {
+  height: 100px;
+  resize: none;
+}
+
+.imagenes-actuales h3 {
+  margin: 10px 0;
+  display: block;
+}
+
+.imagenes-actuales .card {
+  /* border: 1px solid green; */
+  width: 150px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  /* justify-content: center;
+  align-items: center; */
+}
+.imagenes-actuales .imgs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+.imagenes-actuales .imgs img {
+  height: 80%;
+  border-radius: 8px;
+  object-fit: fill;
+  aspect-ratio: 3 / 4;
+}
+
+.imagenes-actuales .imgs button {
+  margin: 5px 0;
+  background-color: #0078d4;
+  color: #f0f8ff;
+  height: 30px;
+  font-weight: 600;
+  font-size: 1rem;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+.add-images {
+  margin: 20px 0;
+}
+
+.cargar-archivo {
+  margin: 10px 0;
+  width: 100%;
+  height: 150px;
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  position: relative;
+  text-align: center;
+  color: #7c7c7c;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cargar-archivo:hover {
+  border: 1px dashed #0078d4;
+}
+
+.add-images input[type="file"] {
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  position: absolute;
+  top: 0;
+  cursor: pointer;
+}
+.nuevas-imgs {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.nuevas-imgs .card-nueva {
+  position: relative;
+  width: 150px;
+  height: 200px;
+}
+
+.nuevas-imgs .card-nueva img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #0078d4; /* borde azul para diferenciarlas */
+}
+
+.nuevas-imgs .card-nueva .delete-nueva {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.btns {
+  display: flex;
+}
+
+.btns .cancel {
+  width: 100px;
+  height: 55px;
+  text-align: center;
+  background-color: #1f1f1f;
+  border: none;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.btns .cancel a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #7c7c7c;
+}
+.btns .cancel:hover {
+  background-color: #2a2a2a;
+  box-shadow: 0 0 2px #ffffff;
+  color: #f0f8ff;
+}
+
+.btns .guardar {
+  width: 100%;
+  height: 55px;
+  background-color: #0078d4;
+  color: #f0f8ff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-left: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btns .guardar:hover {
+  background-color: #0085eb;
+  box-shadow: 0 0 4px #ffffff;
+}
