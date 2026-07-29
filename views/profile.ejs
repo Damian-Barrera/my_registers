@@ -17,18 +17,20 @@
       <nav>
         <header class="header">
           <i class="fa-solid fa-users"></i>
-          <h3>Panel de Control</h3>
+          <h3>
+            <a href="/panel">Panel de Control</a>
+          </h3>
         </header>
         <hr />
         <ul>
           <li>
-            <a href="">
+            <a href="/dashboard">
               <i class="fa-solid fa-users"></i>
               <span>Ver Contactos</span>
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="/add_contact">
               <i class="fa-solid fa-user-plus"></i>
               <span>Agregar Contacto</span>
             </a>
@@ -39,9 +41,9 @@
           <i class="fa-regular fa-user"></i>
           <div class="logout">
             <p>Cerrar Sesión</p>
-            <span>usuarioexistente@hotmail.com</span>
+            <span><%= user.email %></span>
           </div>
-          <a href="/">
+          <a href="/logout">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
           </a>
         </footer>

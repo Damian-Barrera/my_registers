@@ -3,7 +3,7 @@ import { auth } from "../middlewares/auth.js";
 const router = Router();
 
 router.get("/", auth, (req, res) => {
-  return res.render("dashboard");
+  return res.render("add_contact");
 });
 
 export default router;

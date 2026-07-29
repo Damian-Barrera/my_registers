@@ -1,0 +1,23 @@
+/* .profile-header {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+}
+.profile-header a {
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+.profile-header a:hover,
+.profile-header a:hover i {
+  background-color: #1f1f1f;
+  border-radius: 8px;
+  color: #fff;
+} */

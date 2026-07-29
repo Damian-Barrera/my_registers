@@ -17,7 +17,9 @@
       <nav>
         <header class="header">
           <i class="fa-solid fa-users"></i>
-          <h3>Panel de Control</h3>
+          <h3>
+            <a href="/panel">Panel de Control</a>
+          </h3>
         </header>
         <hr />
         <ul>
@@ -28,7 +30,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="/add_contact">
               <i class="fa-solid fa-user-plus"></i>
               <span>Agregar Contacto</span>
             </a>
@@ -39,9 +41,9 @@
           <i class="fa-regular fa-user"></i>
           <div class="logout">
             <p>Cerrar Sesión</p>
-            <span>@correoelectronico</span>
+            <span> <%= user.email %> </span>
           </div>
-          <a href="/">
+          <a href="/logout">
             <i class="fa-solid fa-arrow-right-from-bracket"></i>
           </a>
         </footer>
@@ -66,7 +68,7 @@
           <div class="img">
             <a href="">
               <img src="/images/antomansilla.png" alt="" />
-              <span class="name-model" >Anto</span>
+              <span class="name-model">Anto</span>
             </a>
           </div>
           <div class="img">
@@ -75,7 +77,7 @@
               <span class="name-model">Briza</span>
             </a>
           </div>
-         
+
           <div class="img">
             <a href="">
               <img src="/images/jessica.jpg" alt="" />
