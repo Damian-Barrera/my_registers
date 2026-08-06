@@ -58,20 +58,25 @@
             <input type="search" name="" placeholder="Buscar por nombre" />
           </form>
         </header>
+
         <div class="cards-images">
+          <% chicas.forEach(chica => {%>
           <div class="img">
-            <a href="/profile">
-              <img src="/images/1080w.webp" alt="" />
-              <span class="name-model">Renata</span>
+            <a href="/profile/<%= chica.id %>">
+              <img src="<%= chica.ruta%>" alt="<%= chica.nombre %>" />
+              <span class="name-model"><%=chica.nombre%> </span>
             </a>
           </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/antomansilla.png" alt="" />
-              <span class="name-model">Anto</span>
-            </a>
-          </div>
-          <div class="img">
+          <% }) %>
+          
+        </div>
+      </section>
+    </div>
+  </body>
+</html>
+
+
+<!-- <div class="img">
             <a href="">
               <img src="/images/briza.jpg" alt="" />
               <span class="name-model">Briza</span>
@@ -131,9 +136,4 @@
               <img src="/images/brizaa.jpg" alt="" />
               <span class="name-model">Briza</span>
             </a>
-          </div>
-        </div>
-      </section>
-    </div>
-  </body>
-</html>
+          </div> -->

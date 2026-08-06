@@ -59,9 +59,17 @@
             <h2>Nuevo Contacto</h2>
           </section>
         </header>
-        <form class="form-edit" action="">
+        <form
+          class="form-edit"
+          action="/add_contact"
+          method="POST"
+          enctype="multipart/form-data"
+        >
           <label for="">Nombre:</label>
           <input type="text" name="nombre" id="" />
+
+          <label for="">Apellido:</label>
+          <input type="text" name="apellido" id="" />
 
           <label for="">Direccion:</label>
           <input type="text" name="direccion" id="" />
@@ -93,7 +101,7 @@
           <section class="add-images">
             <h3 for="">Agregar Imagenes</h3>
             <div class="cargar-archivo">
-              <input type="file" name="" id="" />
+              <input type="file" name="fotos" multiple id="" />
               <p>+</p>
               <p>Click para agreagar mas imagenes</p>
             </div>
@@ -112,21 +120,25 @@
       const input = document.querySelector('.add-images input[type="file"]');
       const nuevasImgs = document.getElementById("nuevas-imgs");
 
-      let archivos = [];
+      let archivos = []; // acá guardamos los File reales que van a viajar en el submit
+
+      function actualizarInput() {
+        const dataTransfer = new DataTransfer();
+        archivos.forEach((file) => dataTransfer.items.add(file));
+        input.files = dataTransfer.files;
+      }
 
       input.addEventListener("change", () => {
-        const files = Array.from(input.files);
+        const nuevosArchivos = Array.from(input.files);
 
-        files.forEach((file) => {
+        nuevosArchivos.forEach((file) => {
           const reader = new FileReader();
 
           reader.onload = (e) => {
-            const index = archivos.length;
             archivos.push(file);
 
             const card = document.createElement("div");
             card.classList.add("card-nueva");
-            card.dataset.index = index;
 
             card.innerHTML = `
           <img src="${e.target.result}" alt="${file.name}" />
@@ -136,17 +148,17 @@
             card
               .querySelector(".delete-nueva")
               .addEventListener("click", () => {
-                archivos[card.dataset.index] = null;
+                archivos = archivos.filter((f) => f !== file);
                 card.remove();
+                actualizarInput();
               });
 
             nuevasImgs.appendChild(card);
+            actualizarInput(); // sincronizamos el input real cada vez que agregamos una
           };
 
           reader.readAsDataURL(file);
         });
-
-        input.value = "";
       });
     </script>
   </body>

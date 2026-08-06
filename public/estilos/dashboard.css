@@ -183,6 +183,7 @@ nav footer .fa-arrow-right-from-bracket:hover {
 .cards-images .img a .name-model {
   position: absolute;
   color: #ffffff;
+  text-transform: capitalize;
   z-index: 999;
   bottom: 10px;
   left: 50%;
