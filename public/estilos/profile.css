@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   gap: 20px;
+  text-transform: uppercase;
 }
 
 .profile-header a {
@@ -73,6 +74,7 @@
 .data-info h3 {
   font-size: 1.5rem;
   margin-bottom: 20px;
+  text-transform: capitalize;
 }
 
 .datos-personales ul {
@@ -93,7 +95,7 @@
   margin: 0 5px;
 }
 
-datos-personales li a {
+.datos-personales li a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -192,7 +194,6 @@ datos-personales li a {
   transition: transform 0.3s ease;
   filter: brightness(0.5);
   /* box-shadow: 0px 0px 0px 2px #2f72ef; */
-
 }
 
 /* *******modale de imagenes***** */
@@ -274,4 +275,114 @@ datos-personales li a {
   transform: translateX(-50%);
   color: #aaa;
   font-size: 0.9rem;
+}
+
+/* ********Medias Queries********** *  */
+
+@media (max-width: 1000px) {
+  .card-data {
+    flex-direction: column;
+  }
+
+  .data-image {
+    width: 250px;
+    align-self: center;
+  }
+
+  .data-info .datos-personales {
+    gap: 30px;
+  }
+
+  .gallery {
+    grid-template-columns: repeat(3, minmax(150px, 1fr));
+  }
+
+  .gallery .card {
+    height: auto;
+  }
+}
+
+@media (max-width: 700px) {
+  .main-content header {
+    padding: 15px;
+  }
+
+  .profile-header {
+    align-items: center;
+  }
+
+  .profile-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .edit a {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .card-data {
+    margin: 10px;
+    padding: 15px;
+  }
+
+  .data-image {
+    width: 200px;
+    min-width: 200px;
+    height: 300px;
+  }
+
+  .data-info .datos-personales {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .data-info .datos-personales li {
+    font-size: 1rem;
+  }
+
+  .description p {
+    font-size: 1rem;
+  }
+
+  .gallery {
+    margin: 10px;
+    padding: 5px;
+    grid-template-columns: repeat(2, minmax(120px, 1fr));
+  }
+
+  .gallery .card {
+    margin: 5px;
+  }
+
+  .lightbox-arrow {
+    width: 40px;
+    height: 40px;
+    margin: 0 8px;
+  }
+
+  .lightbox-img-wrapper {
+    max-width: 75vw;
+  }
+  .main-content header {
+    padding: 10px 10px 10px 60px;
+    align-items: center;
+  }
+
+  @media (max-width: 450px) {
+    .data-image {
+      width: 160px;
+      min-width: 160px;
+      height: 240px;
+    }
+
+    .gallery {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .lightbox-arrow {
+      width: 34px;
+      height: 34px;
+      margin: 0 4px;
+    }
+  }
 }

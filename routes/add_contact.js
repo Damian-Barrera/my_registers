@@ -101,19 +101,23 @@ router.post("/", auth, (req, res) => {
         horarios,
         tarifa,
         descripcion,
+        instagram,
+        facebook,
+        telegram,
       } = req.body;
 
       await conn.beginTransaction();
-
+      //Evitar que el teléfono tenga caracteres no numéricos, como espacios o guiones
+      const telefonoLimpio = telefono.replace(/\D/g, "");
       // 1. Insertar la chica
       const [resultChica] = await conn.query(
-        `INSERT INTO chicas (nombre, apellido, edad, telefono, zona, direccion, altura, medidas, horarios, tarifa, descripcion)
-   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        `INSERT INTO chicas (nombre, apellido, edad, telefono, zona, direccion, altura, medidas, horarios, tarifa, descripcion,instagram, facebook, telegram)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?,?,?)`,
         [
           nombre,
           apellido,
           edad,
-          telefono,
+          telefonoLimpio,
           zona,
           direccion,
           altura,
@@ -121,6 +125,9 @@ router.post("/", auth, (req, res) => {
           horarios,
           tarifa,
           descripcion,
+          instagram,
+          facebook,
+          telegram,
         ],
       );
 
@@ -151,7 +158,7 @@ router.post("/", auth, (req, res) => {
       }
 
       await conn.commit();
-      return res.redirect("/panel");
+      return res.redirect("/dashboard");
     } catch (error) {
       await conn.rollback();
       console.error("Error al guardar contacto:", error);

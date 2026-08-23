@@ -6,169 +6,104 @@
     <link rel="stylesheet" href="/estilos/main.css" />
     <link rel="stylesheet" href="/estilos/dashboard.css" />
     <link rel="stylesheet" href="/estilos/edit.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" />
 
-    <title>Edit profile</title>
+    <title>Editar contacto</title>
   </head>
   <body>
     <div class="main">
-      <nav>
-        <header class="header">
-          <i class="fa-solid fa-users"></i>
-          <h3>
-            <a href="/panel">Panel de Control</a>
-          </h3>
-        </header>
-        <hr />
-        <ul>
-          <li>
-            <a href="/dashboard">
-              <i class="fa-solid fa-users"></i>
-              <span>Ver Contactos</span>
-            </a>
-          </li>
-          <li>
-            <a href="/add_contact">
-              <i class="fa-solid fa-user-plus"></i>
-              <span>Agregar Contacto</span>
-            </a>
-          </li>
-        </ul>
+     <%- include("partials/nav") %>
 
-        <footer>
-          <i class="fa-regular fa-user"></i>
-          <div class="logout">
-            <p>Cerrar Sesión</p>
-            <span><%= user.email %></span>
-          </div>
-          <a href="/logout">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          </a>
-        </footer>
-      </nav>
       <section class="main-content">
         <header>
           <section class="profile-header">
-            <a href="/profile">
+            <a href="#" onclick="history.back()">
               <i class="fa-solid fa-arrow-left"></i>
               Atras
             </a>
+
             <h2>Editar Contacto</h2>
           </section>
         </header>
-        <form class="form-edit" action="">
+
+        <form class="form-edit" action="/edit/<%= chica.slug %>" method="POST" enctype="multipart/form-data">
+
+          <input type="hidden" name="imagenesEliminar" id="imagenesEliminar" value="" />
+
           <label for="">Nombre:</label>
-          <input type="text" name="nombre" id="" />
+          <input type="text" name="nombre" id="" value="<%= chica.nombre %>" />
+
+          <label for="">Apellido:</label>
+          <input type="text" name="apellido" id="" value="<%= chica.apellido %>" />
 
           <label for="">Direccion:</label>
-          <input type="text" name="direccion" id="" />
+          <input type="text" name="direccion" id="" value="<%= chica.direccion %>" />
 
           <label for="">Telefono:</label>
-          <input type="tel" name="telefono" id="" />
+          <input type="tel" name="telefono" id="" value="<%= chica.telefono %>" />
 
           <label for="">Zona:</label>
-          <input type="text" name="zona" id="" />
+          <input type="text" name="zona" id="" value="<%= chica.zona %>" />
 
           <label for="">Edad:</label>
-          <input type="text" name="edad" id="" />
+          <input type="text" name="edad" id="" value="<%= chica.edad %>" />
 
           <label for="">Medidas:</label>
-          <input type="text" name="medidas" id="" />
+          <input type="text" name="medidas" id="" value="<%= chica.medidas %>" />
 
           <label for="">Altura:</label>
-          <input type="text" name="altura" id="" />
+          <input type="text" name="altura" id="" value="<%= chica.altura %>" />
 
           <label for="">Horarios:</label>
-          <input type="text" name="horarios" id="" />
+          <input type="text" name="horarios" id="" value="<%= chica.horarios %>" />
 
           <label for="">Tarifa:</label>
-          <input type="text" name="tarifa" id="" />
+          <input type="text" name="tarifa" id="" value="<%= chica.tarifa %>" />
 
           <label for="">Descripción:</label>
-          <textarea name="descripcion" id=""></textarea>
+          <textarea name="descripcion" id=""><%= chica.descripcion %></textarea>
 
           <div class="imagenes-actuales">
-            <h3>Imagenes acutales</h3>
+            <h3>Imágenes actuales</h3>
+
             <div class="imgs">
-              <div class="card">
-                <img src="/images/anto.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/flor.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/brizaa.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/flor.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/anto.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/brizaa.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/anto.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/flor.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/brizaa.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/anto.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/brizaa.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/flor.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/anto.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
-              <div class="card">
-                <img src="/images/flor.jpg" alt="" />
-                <button type="button">Eliminar</button>
-              </div>
+              <% imagenes.forEach(imagen => { %>
+                <div class="card">
+                  <img src="<%= imagen.ruta %>" alt="<%= chica.nombre %>" />
+
+                  <button type="button" class="eliminar-imagen" data-id="<%= imagen.id %>">
+                    Eliminar
+                  </button>
+                </div>
+              <% }) %>
             </div>
           </div>
+
           <section class="add-images">
-            <h3 for="">Agregar Imagenes</h3>
+            <h3>Agregar Imagenes</h3>
+
             <div class="cargar-archivo">
-              <input type="file" name="" id="" />
+              <input type="file" name="fotos" id="" multiple />
               <p>+</p>
-              <p>Click para agreagar mas imagenes</p>
+              <p>Click para agregar mas imagenes</p>
             </div>
+
             <div class="nuevas-imgs" id="nuevas-imgs"></div>
           </section>
+
           <section class="btns">
             <button type="button" class="cancel">
-              <a href="/profile">Cancelar</a>
+              <a href="/profile/<%= chica.slug %>">Cancelar</a>
             </button>
-            <button type="submit" class="guardar">Guardar Cambios</button>
+
+            <button type="submit" class="guardar">
+              Guardar Cambios
+            </button>
           </section>
         </form>
       </section>
     </div>
+
     <script>
       const input = document.querySelector('.add-images input[type="file"]');
       const nuevasImgs = document.getElementById("nuevas-imgs");
@@ -176,6 +111,11 @@
       let archivos = [];
 
       input.addEventListener("change", () => {
+        if (input.files.length > 10) {
+    alert("Solamente podés seleccionar un máximo de 10 imágenes.");
+    input.value = "";
+    return;
+  }
         const files = Array.from(input.files);
 
         files.forEach((file) => {
@@ -190,16 +130,14 @@
             card.dataset.index = index;
 
             card.innerHTML = `
-          <img src="${e.target.result}" alt="${file.name}" />
-          <button type="button" class="delete-nueva">✕</button>
-        `;
+              <img src="${e.target.result}" alt="${file.name}" />
+              <button type="button" class="delete-nueva">✕</button>
+            `;
 
-            card
-              .querySelector(".delete-nueva")
-              .addEventListener("click", () => {
-                archivos[card.dataset.index] = null;
-                card.remove();
-              });
+            card.querySelector(".delete-nueva").addEventListener("click", () => {
+              archivos[card.dataset.index] = null;
+              card.remove();
+            });
 
             nuevasImgs.appendChild(card);
           };
@@ -207,7 +145,28 @@
           reader.readAsDataURL(file);
         });
 
-        input.value = "";
+         
+      });
+
+      // ELIMINAR IMÁGENES EXISTENTES
+
+        const botonesEliminar = document.querySelectorAll(".eliminar-imagen");
+        const imagenesEliminar = document.getElementById("imagenesEliminar");
+
+        let idsEliminar = [];
+
+        botonesEliminar.forEach((boton) => {
+          boton.addEventListener("click", () => {
+          const imagenId = boton.dataset.id;
+          const confirmar = confirm("¿Querés eliminar esta imagen?");
+
+          if (!confirmar) return;
+
+          idsEliminar.push(imagenId);
+          imagenesEliminar.value = idsEliminar.join(",");
+
+          boton.closest(".card").remove();
+        });
       });
     </script>
   </body>

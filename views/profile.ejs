@@ -10,44 +10,11 @@
     <link rel="stylesheet" href="/estilos/main.css" />
     <link rel="stylesheet" href="/estilos/dashboard.css" />
     <link rel="stylesheet" href="/estilos/profile.css" />
-    <title>Perfil de la persona</title>
+    <title> Perfil de <%= chica.nombre%> </title>
   </head>
   <body>
     <div class="main">
-      <nav>
-        <header class="header">
-          <i class="fa-solid fa-users"></i>
-          <h3>
-            <a href="/panel">Panel de Control</a>
-          </h3>
-        </header>
-        <hr />
-        <ul>
-          <li>
-            <a href="/dashboard">
-              <i class="fa-solid fa-users"></i>
-              <span>Ver Contactos</span>
-            </a>
-          </li>
-          <li>
-            <a href="/add_contact">
-              <i class="fa-solid fa-user-plus"></i>
-              <span>Agregar Contacto</span>
-            </a>
-          </li>
-        </ul>
-
-        <footer>
-          <i class="fa-regular fa-user"></i>
-          <div class="logout">
-            <p>Cerrar Sesión</p>
-            <span><%= user.email %></span>
-          </div>
-          <a href="/logout">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          </a>
-        </footer>
-      </nav>
+     <%- include("partials/nav") %>
       <section class="main-content">
         <header>
           <section class="profile-header">
@@ -55,10 +22,10 @@
               <i class="fa-solid fa-arrow-left"></i>
               Atras
             </a>
-            <h2>Renata</h2>
+            <h2> <%=chica.nombre%> </h2>
           </section>
           <div class="edit">
-            <a href="/edit">
+            <a href="/edit/<%= chica.slug %>">
               <i class="fa-solid fa-pen-to-square"></i>
               Editar
             </a>
@@ -66,32 +33,36 @@
         </header>
         <div class="card-data">
           <section class="data-image">
-            <img src="/images/1080w.webp" alt="Foto de perfil" />
+            <% if (portada) { %>
+              <img src="<%= portada.ruta %>" alt="<%= chica.nombre %>" />
+            <% } else { %>
+              <img src="/imgs/default.jpeg" alt="<%= chica.nombre %>" />
+           <% } %>
           </section>
           <section class="data-info">
-            <h3>Renata</h3>
+            <h3> <%=chica.nombre %> </h3>
             <div class="datos-personales">
               <div class="first-list">
                 <ul>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Edad:
-                    <span>25 años</span>
+                    <span> <%= chica.edad %> años</span>
                   </li>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Altura:
-                    <span>1.65m</span>
+                    <span> <%= chica.altura %>m</span>
                   </li>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Medidas:
-                    <span>100-60-80</span>
+                    <span> <%= chica.medidas %> </span>
                   </li>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Zona:
-                    <span>Centro</span>
+                    <span> <%= chica.zona %> </span>
                   </li>
                 </ul>
               </div>
@@ -99,53 +70,61 @@
                 <ul>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
-                    Zona:
-                    <span>Centro</span>
+                    Dirección:
+                    <span> <%= chica.direccion %> </span>
                   </li>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Horarios:
-                    <span>full time</span>
+                    <span><%= chica.horarios %></span>
                   </li>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Contacto:
-                    <span>35455354</span>
+                    <span> <%= chica.telefono %> </span>
                   </li>
                   <li>
                     <i class="fa-solid fa-angles-right"></i>
                     Redes:
+                    <% if (chica.instagram) { %>
                     <span>
                       <a
-                        href="https://www.instagram.com/renata/"
+                        href="<%= chica.instagram %>"
                         target="_blank"
                       >
                         <i class="fa-brands fa-instagram"></i>
                       </a>
                     </span>
+                    <% } %>
+
+                    <% if (chica.facebook) { %>
                     <span>
-                      <a href="https://www.facebook.com/renata" target="_blank">
+                      <a href="<%= chica.facebook %>" target="_blank">
                         <i class="fa-brands fa-facebook"></i>
                       </a>
                     </span>
+                    <% } %>
 
+                    <% if (chica.telegram) { %> 
                     <span>
                       <a
-                        href="https://www.telegram.com/@renata"
+                        href="<%= chica.telegram %>"
                         target="_blank"
                       >
                         <i class="fa-brands fa-telegram"></i>
                       </a>
                     </span>
-
+                    <% } %>
+                    
                     <span>
                       <a
-                        href="https://www.whatsapp.com/@renata"
+                        href=" https://wa.me/549<%= chica.telefono %>"
                         target="_blank"
                       >
                         <i class="fa-brands fa-whatsapp"></i>
                       </a>
                     </span>
+                    
                   </li>
                 </ul>
               </div>
@@ -153,33 +132,18 @@
             <div class="description">
               <h3>Acerca de mi:</h3>
               <p>
-                Soy una persona apasionada por la moda y el estilo, siempre
-                buscando nuevas tendencias y formas de expresarme a través de mi
-                apariencia. Me encanta experimentar con diferentes looks y
-                estilos, y me siento cómoda tanto en ropa casual como en
-                atuendos más elegantes. Mi estilo personal es una mezcla de lo
-                clásico y lo moderno, con un toque de originalidad que me
-                permite destacar en cualquier ocasión.
+               <%= chica.descripcion %>
               </p>
             </div>
           </section>
         </div>
         <div class="gallery">
-          <div class="card">
-            <img src="/images/renata.webp" alt="Foto de perfil" />
-          </div>
-          <div class="card">
-            <img src="/images/1080w.webp" alt="Foto de perfil" />
-          </div>
-          <div class="card">
-            <img src="/images/renata.webp" alt="Foto de perfil" />
-          </div>
-          <div class="card">
-            <img src="/images/1080w.webp" alt="Foto de perfil" />
-          </div>
-          <div class="card">
-            <img src="/images/renata.webp" alt="Foto de perfil" />
-          </div>
+          <% imagenes.forEach(imagen => { %>
+            <div class="card">
+              <img src="<%= imagen.ruta %>" alt="<%= chica.nombre %>" />
+            </div>
+
+          <%} ) %>
         </div>
       </section>
     </div>
@@ -258,3 +222,6 @@
     </script>
   </body>
 </html>
+
+
+   

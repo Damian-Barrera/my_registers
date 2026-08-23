@@ -14,56 +14,27 @@
   </head>
   <body>
     <div class="main">
-      <nav>
-        <header class="header">
-          <i class="fa-solid fa-users"></i>
-          <h3>
-            <a href="/panel">Panel de Control</a>
-          </h3>
-        </header>
-        <hr />
-        <ul>
-          <li>
-            <a href="">
-              <i class="fa-solid fa-users"></i>
-              <span>Ver Contactos</span>
-            </a>
-          </li>
-          <li>
-            <a href="/add_contact">
-              <i class="fa-solid fa-user-plus"></i>
-              <span>Agregar Contacto</span>
-            </a>
-          </li>
-        </ul>
-
-        <footer>
-          <i class="fa-regular fa-user"></i>
-          <div class="logout">
-            <p>Cerrar Sesión</p>
-            <span> <%= user.email %> </span>
-          </div>
-          <a href="/logout">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          </a>
-        </footer>
-      </nav>
+     <%- include("partials/nav") %>
       <section class="main-content">
         <header>
           <h2>Directorio</h2>
           <form class="search">
-            <label for="">
+            <label for="buscar">
               <i class="fa-solid fa-magnifying-glass"></i>
             </label>
-            <input type="search" name="" placeholder="Buscar por nombre" />
+            <input type="search" name="" id="buscar" placeholder="Buscar por nombre" />
           </form>
         </header>
 
         <div class="cards-images">
           <% chicas.forEach(chica => {%>
           <div class="img">
-            <a href="/profile/<%= chica.id %>">
-              <img src="<%= chica.ruta%>" alt="<%= chica.nombre %>" />
+            <a href="/profile/<%= chica.slug %>">
+              <% if (chica.ruta) { %>
+                <img src="<%= chica.ruta %>" alt="<%= chica.nombre %>" />
+              <% } else { %>
+                <img src="/imgs/default.jpeg" alt="<%= chica.nombre %>" />
+              <% } %>
               <span class="name-model"><%=chica.nombre%> </span>
             </a>
           </div>
@@ -72,68 +43,31 @@
         </div>
       </section>
     </div>
+    <script>
+     
+          const buscador = document.getElementById("buscar");
+          const tarjetas = document.querySelectorAll(".cards-images .img");
+
+            buscador.addEventListener("input", () => {
+               const texto = buscador.value
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g, "");
+
+              tarjetas.forEach((tarjeta) => {
+                const nombre = tarjeta
+                  .querySelector(".name-model")
+                  .textContent
+                  .toLowerCase()
+                  .normalize("NFD")
+                  .replace(/[\u0300-\u036f]/g, "");
+
+                tarjeta.style.display = nombre.includes(texto) ? "" : "none";
+              });
+            });
+        
+    </script>
   </body>
 </html>
 
 
-<!-- <div class="img">
-            <a href="">
-              <img src="/images/briza.jpg" alt="" />
-              <span class="name-model">Briza</span>
-            </a>
-          </div>
-
-          <div class="img">
-            <a href="">
-              <img src="/images/jessica.jpg" alt="" />
-              <span class="name-model">Jessica</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/nina.jpg" alt="" />
-              <span class="name-model">Nina</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/edha.jpeg" alt="" />
-              <span class="name-model">Edha</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/flor.jpg" alt="" />
-              <span class="name-model">Flor</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/mara.jpg" alt="" />
-              <span class="name-model">Mara</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/maria.jpg" alt="" />
-              <span class="name-model">Maria</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/anto.jpg" alt="" />
-              <span class="name-model">Anto</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/renata.webp" alt="" />
-              <span class="name-model">Renata</span>
-            </a>
-          </div>
-          <div class="img">
-            <a href="">
-              <img src="/images/brizaa.jpg" alt="" />
-              <span class="name-model">Briza</span>
-            </a>
-          </div> -->

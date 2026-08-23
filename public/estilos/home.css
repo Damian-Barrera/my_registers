@@ -88,3 +88,51 @@
   border-radius: 10px;
   font-size: 6rem;
 }
+
+
+
+/* ****Medias queries *****  */
+
+@media (max-width: 700px) {
+  .main-container {
+    flex-direction: column;
+  }
+
+  .init,
+  .form-container {
+    width: 100%;
+  }
+
+  .init {
+    height: 45vh;
+    min-height: 300px;
+  }
+
+  .form-container {
+    min-height: 55vh;
+    padding: 30px 20px;
+  }
+
+  .main-container h1 {
+    font-size: 2.2rem;
+  }
+
+  .main-container p {
+    width: 90%;
+    font-size: 1rem;
+  }
+
+  .fa-users {
+    font-size: 4rem;
+    padding: 15px;
+  }
+
+  .formulario {
+    width: 100%;
+    max-width: 25rem;
+  }
+
+  .formulario input {
+    width: 100%;
+  }
+}

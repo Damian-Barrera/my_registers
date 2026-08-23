@@ -29,7 +29,9 @@ nav {
 .fa-solid {
   color: var(--color-texto);
 }
-
+.menu-toggle {
+  display: none;
+}
 header .fa-users {
   font-size: 2rem;
   padding: 10px;
@@ -208,4 +210,158 @@ nav footer .fa-arrow-right-from-bracket:hover {
 .cards-images .img:hover {
   filter: brightness(0.5);
   box-shadow: 0px 0px 0px 2px #2f72ef;
+}
+
+/* *********Media Queries***********/
+
+@media (max-width: 1200px) {
+  .cards-images {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  nav {
+    width: 220px;
+  }
+
+  .cards-images {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .cards-images .img a .name-model {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  nav {
+    width: 200px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    z-index: 1000;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  nav.collapsed {
+    transform: translateX(0);
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.5);
+  }
+
+  nav .header h3,
+  nav ul li span,
+  nav footer .logout {
+    display: block;
+  }
+
+  nav .header {
+    justify-content: center;
+    color: red;
+  }
+
+  nav ul li {
+    text-align: left;
+  }
+
+  nav ul li .fa-solid {
+    margin-right: 10px;
+  }
+  nav .header h3 a {
+    font-size: 1rem;
+  }
+  header .fa-users {
+    font-size: 1rem;
+  }
+  nav ul li a {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  nav ul li span {
+    font-size: 0.9rem;
+  }
+  nav footer {
+    height: 60px;
+    justify-content: flex-start;
+    padding: 0 10px;
+  }
+
+  nav footer .fa-user {
+    margin-right: 20px;
+  }
+
+  nav footer .logout span {
+    font-size: 0.7rem;
+  }
+  nav footer .logout p {
+    font-size: 0.8rem;
+  }
+
+  nav footer .fa-user,
+  nav footer .fa-solid {
+    font-size: 0.8rem;
+  }
+  nav footer a {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+  }
+
+  nav footer .fa-arrow-right-from-bracket {
+    display: block;
+    margin-left: 0;
+  }
+
+  .menu-toggle {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    width: 38px;
+    height: 38px;
+    z-index: 1100;
+    border: none;
+    border-radius: 8px;
+    background-color: #222;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-toggle i {
+    color: #fff;
+  }
+
+  .main-content {
+    width: 100%;
+  }
+
+  .main-content header {
+    padding: 10px 10px 10px 60px;
+  }
+
+  .main-content header h2 {
+    font-size: 1.3rem;
+  }
+
+  .search {
+    width: 12rem;
+  }
+
+  .cards-images {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .cards-images .img a .name-model {
+    font-size: 1.1rem;
+    bottom: 6px;
+  }
 }

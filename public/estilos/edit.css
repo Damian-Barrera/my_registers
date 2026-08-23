@@ -216,3 +216,71 @@
   background-color: #0085eb;
   box-shadow: 0 0 4px #ffffff;
 }
+
+
+
+/* **************Medias Queries**************  */
+
+@media (max-width: 700px) {
+  .form-edit {
+    width: auto;
+    margin: 15px;
+  }
+
+  .profile-header {
+    gap: 5px;
+  }
+
+  .profile-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .imagenes-actuales .card,
+  .nuevas-imgs .card-nueva {
+    width: 120px;
+    height: 160px;
+  }
+
+  .imagenes-actuales .imgs,
+  .nuevas-imgs {
+    gap: 10px;
+  }
+
+  .cargar-archivo {
+    height: 120px;
+  }
+
+  .btns {
+    gap: 10px;
+  }
+
+  .btns .cancel {
+    width: 90px;
+    flex-shrink: 0;
+  }
+
+  .btns .guardar {
+    margin-left: 0;
+  }
+}
+
+@media (max-width: 450px) {
+  .form-edit {
+    margin: 10px;
+  }
+
+  .imagenes-actuales .card,
+  .nuevas-imgs .card-nueva {
+    width: 100px;
+    height: 135px;
+  }
+
+  .imagenes-actuales .imgs,
+  .nuevas-imgs {
+    gap: 8px;
+  }
+
+  .btns .cancel {
+    width: 80px;
+  }
+}

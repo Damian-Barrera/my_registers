@@ -15,44 +15,11 @@
   </head>
   <body>
     <div class="main">
-      <nav>
-        <header class="header">
-          <i class="fa-solid fa-users"></i>
-          <h3>
-            <a href="/panel">Panel de Control</a>
-          </h3>
-        </header>
-        <hr />
-        <ul>
-          <li>
-            <a href="/dashboard">
-              <i class="fa-solid fa-users"></i>
-              <span>Ver Contactos</span>
-            </a>
-          </li>
-          <li>
-            <a href="/add_contact">
-              <i class="fa-solid fa-user-plus"></i>
-              <span>Agregar Contacto</span>
-            </a>
-          </li>
-        </ul>
-
-        <footer>
-          <i class="fa-regular fa-user"></i>
-          <div class="logout">
-            <p>Cerrar Sesión</p>
-            <span><%= user.email %></span>
-          </div>
-          <a href="/logout">
-            <i class="fa-solid fa-arrow-right-from-bracket"></i>
-          </a>
-        </footer>
-      </nav>
+       <%- include("partials/nav") %>
       <section class="main-content">
         <header>
           <section class="profile-header">
-            <a href="/profile">
+            <a href="#" onclick="history.back()">
               <i class="fa-solid fa-arrow-left"></i>
               Atras
             </a>
@@ -66,7 +33,7 @@
           enctype="multipart/form-data"
         >
           <label for="">Nombre:</label>
-          <input type="text" name="nombre" id="" />
+          <input type="text" name="nombre" id="" required />
 
           <label for="">Apellido:</label>
           <input type="text" name="apellido" id="" />
@@ -75,7 +42,7 @@
           <input type="text" name="direccion" id="" />
 
           <label for="">Telefono:</label>
-          <input type="tel" name="telefono" id="" />
+          <input type="tel" name="telefono" id="" required />
 
           <label for="">Zona:</label>
           <input type="text" name="zona" id="" />
@@ -94,6 +61,27 @@
 
           <label for="">Tarifa:</label>
           <input type="text" name="tarifa" id="" />
+          <label for="instagram">Instagram</label>
+          <input
+            type="url"
+            name="instagram"
+            id="instagram"
+            placeholder="https://instagram.com/usuario"
+          />
+          <label for="facebook">Facebook</label>
+          <input
+            type="url"
+            name="facebook"
+            id="facebook"
+            placeholder="https://facebook.com/usuario"
+          />
+          <label for="telegram">Telegram</label>
+          <input
+            type="url"
+            name="telegram"
+            id="telegram"
+            placeholder="https://t.me/usuario"
+          />
 
           <label for="">Descripción:</label>
           <textarea name="descripcion" id=""></textarea>

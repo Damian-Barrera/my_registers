@@ -1,0 +1,38 @@
+<button class="menu-toggle" id="menu-toggle">
+  <i class="fa-solid fa-bars"></i>
+</button>
+<nav>
+  <header class="header">
+    <i class="fa-solid fa-users"></i>
+    <h3>
+      <a href="/panel">Panel de Control</a>
+    </h3>
+  </header>
+  <hr />
+  <ul>
+    <li>
+      <a href="/dashboard">
+        <i class="fa-solid fa-users"></i>
+        <span>Ver Contactos</span>
+      </a>
+    </li>
+    <li>
+      <a href="/add_contact">
+        <i class="fa-solid fa-user-plus"></i>
+        <span>Agregar Contacto</span>
+      </a>
+    </li>
+  </ul>
+
+  <footer>
+    <i class="fa-regular fa-user"></i>
+    <div class="logout">
+      <p>Cerrar Sesión</p>
+      <span> <%= user.email %> </span>
+    </div>
+    <a href="/logout">
+      <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
+  </footer>
+</nav>
+<script src="/js/nav.js"></script>
