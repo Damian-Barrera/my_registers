@@ -300,4 +300,44 @@ router.post("/:slug", auth, (req, res) => {
   });
 });
 
+router.post("/delete/:slug", auth, async (req, res) => {
+  const { slug } = req.params;
+
+  try {
+    const [rows] = await pool.query("SELECT id FROM chicas WHERE slug = ?", [slug]);
+
+    if (rows.length === 0) {
+      return res.status(404).send("Usuario no encontrado");
+    }
+
+    const id = rows[0].id;
+
+    const [imagenes] = await pool.query("SELECT ruta FROM imagenes WHERE persona_id = ?", [id]);
+
+    await pool.query("DELETE FROM chicas WHERE id = ?", [id]);
+
+    for (const imagen of imagenes) {
+      const rutaArchivo = path.join("public", imagen.ruta);
+
+      if (fs.existsSync(rutaArchivo)) {
+        fs.unlinkSync(rutaArchivo);
+      }
+    }
+
+    const carpetas = [...new Set(imagenes.map(imagen => path.dirname(imagen.ruta)))];
+
+    for (const carpeta of carpetas) {
+      const rutaCarpeta = path.join("public", carpeta);
+
+      if (fs.existsSync(rutaCarpeta) && fs.readdirSync(rutaCarpeta).length === 0) {
+        fs.rmdirSync(rutaCarpeta);
+      }
+    }
+
+    return res.redirect("/dashboard");
+  } catch (error) {
+    console.error("Error al eliminar usuario", error);
+    return res.status(500).send("Error al eliminar el contacto");
+  }
+});
 export default router;

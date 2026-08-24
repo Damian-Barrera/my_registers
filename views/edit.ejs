@@ -101,6 +101,9 @@
             </button>
           </section>
         </form>
+        <form class="form-eliminar" id="form-eliminar"  action="/edit/delete/<%= chica.slug %>" method="POST">
+          <button type="submit">Eliminar Contacto</button>
+        </form>
       </section>
     </div>
 
@@ -167,6 +170,15 @@
 
           boton.closest(".card").remove();
         });
+      });
+
+      //Eliminar contacto
+      const formEliminar = document.getElementById("form-eliminar");
+
+      formEliminar.addEventListener("submit", (e) => {
+      const confirmar = confirm("¿Estás seguro de que querés eliminar este contacto? Esta acción no se puede deshacer.");
+
+        if (!confirmar) e.preventDefault();
       });
     </script>
   </body>
