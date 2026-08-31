@@ -9,6 +9,19 @@
 body {
   color: #f0f8ff;
   font-family: sans-serif;
+  background-image: url("https://imgs.search.brave.com/7XQYtH-R0u9LD6wRAD_ldWBR58LvdqHgziCfvkff7C0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9mYXBl/bGxvLmNvbS9jb250/ZW50L3Ivby9yb3Np/cmlzLWNvbnRyZXJh/cy8xMDAwL3Jvc2ly/aXMtY29udHJlcmFz/XzAwOTlfMzAwcHgu/anBn");
+  
+  background-image: url("https://imgs.search.brave.com/c7pdmNLXOZrDosIbDZuwkxdaXbogYlrtlgLomy761po/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9mYXBl/bGxvLmNvbS9jb250/ZW50L3Ivby9yb3Np/cmlzLWNvbnRyZXJh/cy8xMDAwL3Jvc2ly/aXMtY29udHJlcmFz/XzAxMDBfMzAwcHgu/anBn");
+
+  background-image: url("https://imgs.search.brave.com/x3mVh6RImeNf2-viNwb9hdSg3KeKCzXFnYWWObLZwBo/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zMjA0/LmVyb21lLmNvbS8y/ODQ0L1k5bVpNM3VO/L3lYanQ3MDhoLmpw/ZWc_dj0xNzIwMzc3/MDky");
+
+  
+  
+  background-size: contain; 
+  background-position: right;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-blend-mode:  overlay;
   background-color: #0a0a0a;
 }
 

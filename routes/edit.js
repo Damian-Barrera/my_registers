@@ -158,6 +158,8 @@ router.post("/:slug", auth, (req, res) => {
     } = req.body;
 
     const telefonoLimpio = telefono.replace(/\D/g, "");
+    const edadLimpia = edad === "" ? null : edad;
+    const alturaLimpia = altura === "" ? null : altura;
 
     try {
       const [rows] = await pool.query("SELECT id FROM chicas WHERE slug = ?", [
@@ -188,11 +190,11 @@ router.post("/:slug", auth, (req, res) => {
         [
           nombre,
           apellido,
-          edad,
+          edadLimpia,
           telefonoLimpio,
           zona,
           direccion,
-          altura,
+          alturaLimpia,
           medidas,
           horarios,
           tarifa,
@@ -304,7 +306,9 @@ router.post("/delete/:slug", auth, async (req, res) => {
   const { slug } = req.params;
 
   try {
-    const [rows] = await pool.query("SELECT id FROM chicas WHERE slug = ?", [slug]);
+    const [rows] = await pool.query("SELECT id FROM chicas WHERE slug = ?", [
+      slug,
+    ]);
 
     if (rows.length === 0) {
       return res.status(404).send("Usuario no encontrado");
@@ -312,7 +316,10 @@ router.post("/delete/:slug", auth, async (req, res) => {
 
     const id = rows[0].id;
 
-    const [imagenes] = await pool.query("SELECT ruta FROM imagenes WHERE persona_id = ?", [id]);
+    const [imagenes] = await pool.query(
+      "SELECT ruta FROM imagenes WHERE persona_id = ?",
+      [id],
+    );
 
     await pool.query("DELETE FROM chicas WHERE id = ?", [id]);
 
@@ -324,12 +331,17 @@ router.post("/delete/:slug", auth, async (req, res) => {
       }
     }
 
-    const carpetas = [...new Set(imagenes.map(imagen => path.dirname(imagen.ruta)))];
+    const carpetas = [
+      ...new Set(imagenes.map((imagen) => path.dirname(imagen.ruta))),
+    ];
 
     for (const carpeta of carpetas) {
       const rutaCarpeta = path.join("public", carpeta);
 
-      if (fs.existsSync(rutaCarpeta) && fs.readdirSync(rutaCarpeta).length === 0) {
+      if (
+        fs.existsSync(rutaCarpeta) &&
+        fs.readdirSync(rutaCarpeta).length === 0
+      ) {
         fs.rmdirSync(rutaCarpeta);
       }
     }

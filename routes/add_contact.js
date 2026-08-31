@@ -16,6 +16,15 @@ function sanitizarNombre(nombre) {
     .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "_");
 }
+function generarSlug(nombre, id) {
+  return `${nombre
+    .trim()
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")}-${id}`;
+}
 
 function obtenerCarpetaDisponible(basePath, nombreCarpeta) {
   let intento = nombreCarpeta;
@@ -109,6 +118,8 @@ router.post("/", auth, (req, res) => {
       await conn.beginTransaction();
       //Evitar que el teléfono tenga caracteres no numéricos, como espacios o guiones
       const telefonoLimpio = telefono.replace(/\D/g, "");
+      const edadLimpia = edad === "" ? null : edad;
+      const alturaLimpia = altura === "" ? null : altura;
       // 1. Insertar la chica
       const [resultChica] = await conn.query(
         `INSERT INTO chicas (nombre, apellido, edad, telefono, zona, direccion, altura, medidas, horarios, tarifa, descripcion,instagram, facebook, telegram)
@@ -116,11 +127,11 @@ router.post("/", auth, (req, res) => {
         [
           nombre,
           apellido,
-          edad,
+          edadLimpia,
           telefonoLimpio,
           zona,
           direccion,
-          altura,
+          alturaLimpia,
           medidas,
           horarios,
           tarifa,
@@ -132,7 +143,12 @@ router.post("/", auth, (req, res) => {
       );
 
       const chicaId = resultChica.insertId;
+      const slug = generarSlug(nombre, chicaId);
 
+      await conn.query("UPDATE chicas SET slug = ? WHERE id = ?", [
+        slug,
+        chicaId,
+      ]);
       // 2. Insertar cada imagen, guardando la ruta relativa (para poder usarla en <img src="...">)
       let primeraImagenId = null;
 
@@ -161,6 +177,23 @@ router.post("/", auth, (req, res) => {
       return res.redirect("/dashboard");
     } catch (error) {
       await conn.rollback();
+
+      if (req.files && req.files.length > 0) {
+        for (const file of req.files) {
+          if (fs.existsSync(file.path)) {
+            fs.unlinkSync(file.path);
+          }
+        }
+      }
+
+      if (req.carpetaContacto) {
+        const carpeta = path.join("public", "imgs", req.carpetaContacto);
+
+        if (fs.existsSync(carpeta) && fs.readdirSync(carpeta).length === 0) {
+          fs.rmdirSync(carpeta);
+        }
+      }
+
       console.error("Error al guardar contacto:", error);
       return res.status(500).send("Error al guardar el contacto");
     } finally {

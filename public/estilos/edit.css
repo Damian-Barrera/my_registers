@@ -218,7 +218,7 @@
 }
 .form-eliminar {
   width: 50%;
-  margin: 15px  25px;
+  margin: 15px 25px;
 }
 
 .form-eliminar button {
@@ -238,8 +238,6 @@
   background-color: #b52525;
   box-shadow: 0 0 4px #ffffff;
 }
-
-
 
 /* **************Medias Queries**************  */
 
@@ -283,6 +281,9 @@
 
   .btns .guardar {
     margin-left: 0;
+  }
+  .form-eliminar {
+    margin-left: 10px;
   }
 }
 

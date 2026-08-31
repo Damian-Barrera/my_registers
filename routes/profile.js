@@ -13,7 +13,9 @@ router.get("/:slug", auth, async (req, res) => {
     ]);
 
     if (rows.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      // return res.send("Usuario no encontrado");
+      return res.status(404).render("404");
+      // return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     const chica = rows[0];

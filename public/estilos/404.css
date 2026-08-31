@@ -1,0 +1,68 @@
+.error-page {
+min-height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+background-color: #111;
+}
+
+.error-card {
+width: 90%;
+max-width: 500px;
+padding: 40px;
+text-align: center;
+background-color: #1f1f1f;
+border-radius: 12px;
+}
+
+.error-card h1 {
+margin: 0;
+color: #407ae6;
+font-size: 6rem;
+}
+
+.error-card h2 {
+margin: 10px 0;
+color: #fff;
+}
+
+.error-card p {
+color: #747474;
+line-height: 1.5;
+}
+
+.error-buttons {
+display: flex;
+justify-content: center;
+gap: 15px;
+margin-top: 30px;
+}
+
+.error-buttons button,
+.error-buttons a {
+padding: 12px 20px;
+border: none;
+border-radius: 8px;
+font-size: 1rem;
+font-weight: 600;
+cursor: pointer;
+text-decoration: none;
+}
+
+.error-buttons button {
+background-color: #2a2a2a;
+color: #fff;
+}
+
+.error-buttons a {
+background-color: #407ae6;
+color: #fff;
+}
+
+.error-buttons button:hover {
+background-color: #333;
+}
+
+.error-buttons a:hover {
+background-color: #405ee6;
+}
