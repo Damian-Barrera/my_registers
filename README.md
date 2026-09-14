@@ -191,13 +191,6 @@ Aplicación en producción
 
 Los cambios enviados al repositorio pueden desplegarse automáticamente mediante el sistema de integración de Render.
 
-## Estado del proyecto
-
-El proyecto se encuentra en desarrollo activo.
-
-Entre las próximas mejoras previstas se encuentra la incorporación de **videos** como contenido multimedia, además de nuevas funcionalidades y mejoras generales de la aplicación.
-
----
 
 ## Autor
 
