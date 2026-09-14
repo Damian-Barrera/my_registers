@@ -1,73 +1,25 @@
 import { Router } from "express";
 import { auth } from "../middlewares/auth.js";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
+import cloudinary from "../cloudinary_config.js";
 import pool from "../db_config.js";
 
 const router = Router();
 
-const storage = multer.diskStorage({
-  destination: async (req, file, cb) => {
-    try {
-      const { slug } = req.params;
-
-      const [rows] = await pool.query(
-        "SELECT id, nombre FROM chicas WHERE slug = ?",
-        [slug],
-      );
-
-      if (rows.length === 0) return cb(new Error("Usuario no encontrado"));
-
-      const id = rows[0].id;
-
-      const [imagenes] = await pool.query(
-        "SELECT ruta FROM imagenes WHERE persona_id = ? LIMIT 1",
-        [id],
-      );
-
-      let carpeta;
-
-      if (imagenes.length > 0) {
-        carpeta = path.dirname(imagenes[0].ruta).replace(/^\/imgs\//, "");
-      } else {
-        carpeta = sanitizarNombre(rows[0].nombre);
-
-        const rutaCarpeta = path.join("public", "imgs", carpeta);
-
-        if (!fs.existsSync(rutaCarpeta)) {
-          fs.mkdirSync(rutaCarpeta, { recursive: true });
-        }
-      }
-
-      req.carpetaContacto = carpeta;
-
-      cb(null, path.join("public", "imgs", carpeta));
-    } catch (error) {
-      cb(error);
-    }
-  },
-
-  filename: (req, file, cb) => {
-    const carpeta = path.join("public", "imgs", req.carpetaContacto);
-    const ext = path.extname(file.originalname);
-    const nombre = path.basename(file.originalname, ext);
-
-    let nombreFinal = file.originalname;
-    let contador = 1;
-
-    while (fs.existsSync(path.join(carpeta, nombreFinal))) {
-      nombreFinal = `${nombre}_${contador}${ext}`;
-      contador++;
-    }
-
-    cb(null, nombreFinal);
-  },
-});
+const storage = multer.memoryStorage();
 
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const tiposPermitidos = /jpeg|jpg|png|webp/;
+
+    if (tiposPermitidos.test(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error("Solo se permiten imágenes (jpg, jpeg, png, webp)"));
+    }
+  },
 });
 
 function generarSlug(nombre, id) {
@@ -79,6 +31,7 @@ function generarSlug(nombre, id) {
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")}-${id}`;
 }
+
 function sanitizarNombre(nombre) {
   return nombre
     .trim()
@@ -88,19 +41,25 @@ function sanitizarNombre(nombre) {
     .replace(/[^a-z0-9]+/g, "_");
 }
 
-function obtenerCarpetaDisponible(basePath, nombreCarpeta, carpetaActual) {
-  let intento = nombreCarpeta;
-  let contador = 1;
+function obtenerPublicId(url) {
+  const pathname = new URL(url).pathname;
+  const partes = pathname.split("/upload/")[1].split("/");
 
-  while (
-    fs.existsSync(path.join(basePath, intento)) &&
-    intento !== carpetaActual
-  ) {
-    intento = `${nombreCarpeta}_${contador}`;
-    contador++;
+  if (partes[0].startsWith("v")) {
+    partes.shift();
   }
 
-  return intento;
+  const publicId = partes.join("/");
+  return publicId.replace(/\.[^/.]+$/, "");
+}
+
+function obtenerCarpetaCloudinary(url) {
+  const publicId = obtenerPublicId(url);
+  const partes = publicId.split("/");
+
+  partes.pop();
+
+  return partes.join("/");
 }
 
 router.get("/:slug", auth, async (req, res) => {
@@ -172,18 +131,11 @@ router.post("/:slug", auth, (req, res) => {
 
       const id = rows[0].id;
       const nuevoSlug = generarSlug(nombre, id);
-      const [imagenActual] = await pool.query(
-        "SELECT ruta FROM imagenes WHERE persona_id = ? LIMIT 1",
+
+      const [imagenesActuales] = await pool.query(
+        "SELECT id, ruta FROM imagenes WHERE persona_id = ?",
         [id],
       );
-
-      let carpetaActual = null;
-
-      if (imagenActual.length > 0) {
-        carpetaActual = path
-          .dirname(imagenActual[0].ruta)
-          .replace(/^\/imgs\//, "");
-      }
 
       await pool.query(
         `UPDATE chicas SET nombre = ?, apellido = ?, edad = ?, telefono = ?, zona = ?, direccion = ?, altura = ?, medidas = ?, horarios = ?, tarifa = ?, descripcion = ?, instagram = ?, facebook = ?, telegram = ?, slug = ? WHERE id = ?`,
@@ -206,28 +158,7 @@ router.post("/:slug", auth, (req, res) => {
           id,
         ],
       );
-      if (carpetaActual) {
-        const nuevaCarpetaBase = sanitizarNombre(nombre);
-        const nuevaCarpeta = obtenerCarpetaDisponible(
-          path.join("public", "imgs"),
-          nuevaCarpetaBase,
-          carpetaActual,
-        );
 
-        if (carpetaActual !== nuevaCarpeta) {
-          const rutaVieja = path.join("public", "imgs", carpetaActual);
-          const rutaNueva = path.join("public", "imgs", nuevaCarpeta);
-
-          fs.renameSync(rutaVieja, rutaNueva);
-
-          await pool.query(
-            "UPDATE imagenes SET ruta = REPLACE(ruta, ?, ?) WHERE persona_id = ?",
-            [`/imgs/${carpetaActual}/`, `/imgs/${nuevaCarpeta}/`, id],
-          );
-
-          req.carpetaContacto = nuevaCarpeta;
-        }
-      }
       if (imagenesEliminar) {
         const ids = imagenesEliminar.split(",");
 
@@ -239,16 +170,14 @@ router.post("/:slug", auth, (req, res) => {
 
           if (rowsImagen.length === 0) continue;
 
-          const rutaArchivo = path.join("public", rowsImagen[0].ruta);
+          const publicId = obtenerPublicId(rowsImagen[0].ruta);
+
+          await cloudinary.uploader.destroy(publicId);
 
           await pool.query(
             "DELETE FROM imagenes WHERE id = ? AND persona_id = ?",
             [imagenId, id],
           );
-
-          if (fs.existsSync(rutaArchivo)) {
-            fs.unlinkSync(rutaArchivo);
-          }
         }
 
         const [nuevaPortada] = await pool.query(
@@ -268,32 +197,48 @@ router.post("/:slug", auth, (req, res) => {
           );
         }
       }
-      for (const file of req.files) {
-        const rutaRelativa = `/imgs/${req.carpetaContacto}/${file.filename}`;
 
-        await pool.query(
-          "INSERT INTO imagenes (persona_id, ruta) VALUES (?, ?)",
-          [id, rutaRelativa],
-        );
-      }
-      const [portadaActual] = await pool.query(
-        "SELECT foto_portada_id FROM chicas WHERE id = ?",
-        [id],
-      );
+      let carpeta = null;
 
-      if (!portadaActual[0].foto_portada_id) {
-        const [nuevaPortada] = await pool.query(
-          "SELECT id FROM imagenes WHERE persona_id = ? LIMIT 1",
+      if (imagenesActuales.length > 0) {
+        const [imagenExistente] = await pool.query(
+          "SELECT ruta FROM imagenes WHERE persona_id = ? LIMIT 1",
           [id],
         );
 
-        if (nuevaPortada.length > 0) {
+        if (imagenExistente.length > 0) {
+          carpeta = obtenerCarpetaCloudinary(imagenExistente[0].ruta);
+        }
+      }
+
+      if (!carpeta) {
+        carpeta = `my_registers/${sanitizarNombre(nombre)}-${id}`;
+      }
+
+      for (const file of req.files) {
+        const resultado = await cloudinary.uploader.upload(
+          `data:${file.mimetype};base64,${file.buffer.toString("base64")}`,
+          { folder: carpeta },
+        );
+
+        const [resultImagen] = await pool.query(
+          "INSERT INTO imagenes (persona_id, ruta) VALUES (?, ?)",
+          [id, resultado.secure_url],
+        );
+
+        const [portadaActual] = await pool.query(
+          "SELECT foto_portada_id FROM chicas WHERE id = ?",
+          [id],
+        );
+
+        if (!portadaActual[0].foto_portada_id) {
           await pool.query(
             "UPDATE chicas SET foto_portada_id = ? WHERE id = ?",
-            [nuevaPortada[0].id, id],
+            [resultImagen.insertId, id],
           );
         }
       }
+
       return res.redirect(`/profile/${nuevoSlug}`);
     } catch (error) {
       console.error("Error al actualizar usuario", error);
@@ -320,31 +265,19 @@ router.post("/delete/:slug", auth, async (req, res) => {
       "SELECT ruta FROM imagenes WHERE persona_id = ?",
       [id],
     );
+    const carpeta =
+      imagenes.length > 0 ? obtenerCarpetaCloudinary(imagenes[0].ruta) : null;
+    
+    for (const imagen of imagenes) {
+      const publicId = obtenerPublicId(imagen.ruta);
+      await cloudinary.uploader.destroy(publicId);
+    }
+    
+    if (carpeta) {
+      await cloudinary.api.delete_folder(carpeta);
+    }
 
     await pool.query("DELETE FROM chicas WHERE id = ?", [id]);
-
-    for (const imagen of imagenes) {
-      const rutaArchivo = path.join("public", imagen.ruta);
-
-      if (fs.existsSync(rutaArchivo)) {
-        fs.unlinkSync(rutaArchivo);
-      }
-    }
-
-    const carpetas = [
-      ...new Set(imagenes.map((imagen) => path.dirname(imagen.ruta))),
-    ];
-
-    for (const carpeta of carpetas) {
-      const rutaCarpeta = path.join("public", carpeta);
-
-      if (
-        fs.existsSync(rutaCarpeta) &&
-        fs.readdirSync(rutaCarpeta).length === 0
-      ) {
-        fs.rmdirSync(rutaCarpeta);
-      }
-    }
 
     return res.redirect("/dashboard");
   } catch (error) {
@@ -352,4 +285,5 @@ router.post("/delete/:slug", auth, async (req, res) => {
     return res.status(500).send("Error al eliminar el contacto");
   }
 });
+
 export default router;
